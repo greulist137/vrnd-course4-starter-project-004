@@ -19,9 +19,13 @@ public class GameLogic : MonoBehaviour {
 
 	private int currentSolveIndex = 0; //Temporary variable for storing the index that the player is solving for in the pattern.
 
+	public GameObject failAudioHolder;
+
 
 	// Use this for initialization
 	void Start () {
+		print ("Can you see me?");
+		print ("sdjhdflkjd");
 		puzzleOrder = new int[puzzleLength]; //Set the size of our array to the declared puzzle length
 		generatePuzzleSequence (); //Generate the puzzle sequence for this playthrough.  
 	}
@@ -64,7 +68,7 @@ public class GameLogic : MonoBehaviour {
 		//Generate a random number one through five, save it in an array.  Do this n times.
 		//Step through the array for displaying the puzzle, and checking puzzle failure or success.
 		startUI.SetActive (false);
-		//eventSystem.SetActive(false);
+		eventSystem.SetActive(false);
 		iTween.MoveTo (player, playPoint.transform.position, 5f);
 		CancelInvoke ("displayPattern");
 		InvokeRepeating("displayPattern", 3, puzzleSpeed); //Start running through the displaypattern function
@@ -124,7 +128,7 @@ public class GameLogic : MonoBehaviour {
 
 	public void puzzleFailure() { //Do this when the player gets it wrong
 		Debug.Log("You've Failed, Resetting puzzle");
-
+		failAudioHolder.GetComponent<GvrAudioSource> ().Play ();
 		currentSolveIndex = 0;
 
 		startPuzzle ();
